@@ -1,2 +1,2 @@
-# poins
+# point
 Knowledge points &amp; Configuration item
