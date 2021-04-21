@@ -1,0 +1,99 @@
+
+> css <
+font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', 'Helvetica Neue', 'Arial', sans-serif;
+.blue-gradient-background {
+    background: linear-gradient(135deg, rgba(80, 122, 196, 1) 43%, rgba(128, 192, 226, 1) 89%);
+    background-color: rgb(80, 122, 196);
+}
+
+> git <
+git log --pretty=oneline 文件名
+git show
+git branch -a
+ 忽略文件的权限
+-git config core.filemode false
+
+> php <
+发现 post 请求没有 session，判断是权限的问题，结果不是，应该是软件安装过程中 php 包的顺序不对引起的
+install php in debian
+Step 1: Update system
+Ensure your system is updated:
+- sudo apt update
+- sudo apt upgrade -y && sudo reboot
+Step 2: Add SURY PHP PPA repository
+Download and store PPA repository in a file on your Debian Server/Desktop. But first, download GPG key.
+- sudo apt -y install lsb-release apt-transport-https ca-certificates 
+-sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+Then add repository.
+- echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+Step 3: Install PHP 7.4 on Debian 10 / Debian 9
+The last step is to Install PHP 7.4 on Debian 10 / Debian 9. Before installation, update system package list on added repositories.
+- sudo apt update
+Then install  PHP 7.4 on Debian 10 / Debian 9:
+- sudo apt -y install php7.4
+Answer yes when prompted to complete installation of PHP 7.4 on Debian 10 / Debian 9 Linux system.
+- apt install php7.2-{ xxx }
+- apt install php7.2-common php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
+- apt install php7.4-common php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-opcache
+
+> debian install php8.0 <
+-sudo apt install -y lsb-release apt-transport-https ca-certificates wget
+-sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+-echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+
+-sudo apt update
+-sudo apt install php8.0- {扩展名}
+-sudo apt-cache search php8.0
+
+> mysql <
+mysql_secure_installation
+
+> Install Elasticsearch <
+https://www.onitroad.com/jc/archive/how-to-install-elasticsearch-on-debian.html
+curl -X GET "http://localhost:9200/?pretty"
+
+> 设置默认 php 版本
+1、sudo update-alternatives --set php /usr/bin/php7.4
+2、sudo update-alternatives --config php
+
+> debian <
+  清除卸载残留
+- apt purge
+- sudo apt-cache show apache2
+
+> alias <
+-vim ~/.bashrc
+-source ~/.bashrc
+-alias -p
+-unalias
+
+> docke <
+ sudo usermod -aG docker $USER
+
+> mysql <
+mysql_secure_installation
+CREATE USER 'mag'@'localhost' IDENTIFIED BY 'magento';
+GRANT ALL ON magento.* TO 'mag'@'localhost';
+FLUSH PRIVILEGES;
+
+> magento <
+ after install completed
+-php bin/magento setup:di:compile
+-bin/magento setup:static-content:deploy -f
+-bin/magento cron:install
+-bin/magento cron:run
+
+-bin/magento deploy:mode:show
+-bin/magento deploy:mode:set developer / production
+
+ Magento-2:Class Magento\Framework\App\Http\Interceptor does not exist
+-bin/magento setup:di:compile
+
+> vim <
+查找并替换
+:%s/path_to_website/var\/www\/ocart/g
+
+> ufw <
+apt install ufw
+https://github.com/Paul-Reed/cloudflare-ufw
+
