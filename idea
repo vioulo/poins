@@ -1,0 +1,43 @@
+> web framework<
+page layout
+header  -> add part [part sort]
+main    -> 具体的格式 [left,right] [top,bottom] [part sort]
+footer  -> add part [part sort]
+-这不是前后端分离的
+
+
+	   _ header1
+	  /_ header2 -> 里面的内容不限制
+block_/_ main-top
+	  \_ main-left
+	  \_ main-right
+
+
+接口和样式独立
+
+> 商品属性 设计 <
+color: red blue white black green
+ size:  5 6 7 8 9 10 11 12
+
+ red 5 stock: 200
+ red 6 stock: 0
+ red 7 stock: 12
+ red 8 stock: 100
+
+red 5 6 7 8
+blue 5 6 7 8 9 10 11 12
+ 当 启用库存时候
+
+ 普通商品
+ 可配置商品 (多变量)
+ 分组商品
+ 虚拟商品
+ 捆绑商品（【推荐】商品？）
+ 
+ 可下载商品
+ 指定类型，映射付款后的操作
+
+ > 购物车设计 <
+1. fingerprintjs
+2. localstorage
+3. 特殊验证

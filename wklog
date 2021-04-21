@@ -1,43 +1,4 @@
 
-page layout
-
-header  -> add part [part sort]
-main    -> 具体的格式 [left,right] [top,bottom] [part sort]
-footer  -> add part [part sort]
--这不是前后端分离的
-
-
-	   _ header1
-	  /_ header2 -> 里面的内容不限制
-block_/_ main-top
-	  \_ main-left
-	  \_ main-right
-
-
-接口和样式独立
-
-color: red blue white black green
- size:  5 6 7 8 9 10 11 12
-
- red 5 stock: 200
- red 6 stock: 0
- red 7 stock: 12
- red 8 stock: 100
-
-red 5 6 7 8
-blue 5 6 7 8 9 10 11 12
- 当 启用库存时候
-
- 普通商品
- 可配置商品 (多变量)
- 分组商品
- 虚拟商品
- 捆绑商品（【推荐】商品？）
- 
- 可下载商品
- 指定类型，映射付款后的操作
---------------------------------------------------------------------------------
-
 20200325 1120
 从宝塔面板上传的文件，其中的空格被删掉了，一些写在文件中的样式出现了错误。
 x 后来发现是 php7.4 对 twig 的空格做了处理，版本不兼容。
@@ -95,7 +56,8 @@ c  商品属性判断
 
 alter table oc_product_option_value add op_exclude varchar(600) default '';
 
-x opencart 新建项目后，有扩展的，需要在扩展的页面刷新以刷新一下缓存
-
 magento 可配置商品
-牛魔王订单列表查询修改
+nomow
+订单列表查询修改
+修改订单导出模板设置
+修改导出订单的结构

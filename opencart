@@ -1,3 +1,7 @@
+
+opencart 新建项目后，有扩展的，需要在扩展的页面刷新以刷新一下缓存
+
+> opencart nginx <
 server {
     server_name ocart.com
     root /home/tony/opencart/3.0.3.2/dorno

@@ -60,7 +60,8 @@ curl -X GET "http://localhost:9200/?pretty"
   清除卸载残留
 - apt purge
 - sudo apt-cache show apache2
-
+ 切换桌面环境
+- update-alternatives --config x-session-manager
 > alias <
 -vim ~/.bashrc
 -source ~/.bashrc
@@ -96,4 +97,3 @@ FLUSH PRIVILEGES;
 > ufw <
 apt install ufw
 https://github.com/Paul-Reed/cloudflare-ufw
-
