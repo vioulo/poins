@@ -15,6 +15,7 @@ git branch -a
 
 > php <
 发现 post 请求没有 session，判断是权限的问题，结果不是，应该是软件安装过程中 php 包的顺序不对引起的
+
 install php in debian
 Step 1: Update system
 Ensure your system is updated:
@@ -56,12 +57,18 @@ curl -X GET "http://localhost:9200/?pretty"
 1、sudo update-alternatives --set php /usr/bin/php7.4
 2、sudo update-alternatives --config php
 
-> debian <
+> linux <
+  x debian
   清除卸载残留
 - apt purge
 - sudo apt-cache show apache2
- 切换桌面环境
-- update-alternatives --config x-session-manager
+  切换桌面环境
+- sudo update-alternatives --config x-session-manager
+- sudo dpkg-reconfigure sddm
+  x uuid
+- cat /proc/sys/kernel/random/uuid
+- uuidgen | sed 's/-//g'
+
 > alias <
 -vim ~/.bashrc
 -source ~/.bashrc
