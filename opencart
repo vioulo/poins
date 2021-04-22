@@ -35,6 +35,9 @@ server {
     location /admin {
         index index.php;
     }
+    ///// RewriteRule ^PAY2P_return$ index.php?route=extension/checkout/return_PAY2P [L]
+    ///// RewriteRule ^products/(.*) /$1 [L]
+
     location / {
         try_files $uri @opencart;
     }
