@@ -1,43 +1,47 @@
 > web framework<
-page layout
-header  -> add part [part sort]
-main    -> 具体的格式 [left,right] [top,bottom] [part sort]
-footer  -> add part [part sort]
--这不是前后端分离的
+	x page layout
+					_menu group
+				   /_imgs group - icon group
+	back-end group_/_product groups          _\ api  - front-end
+				   \_ other group            /
 
+> proudct design <
+	x 商品属性设计
+	color: red blue white black green
+	size:  5 6 7 8 9 10 11 12
 
-	   _ header1
-	  /_ header2 -> 里面的内容不限制
-block_/_ main-top
-	  \_ main-left
-	  \_ main-right
+	当 启用库存时候
+	red 5 stock: 200
+	red 6 stock: 0
+	red 7 stock: 12
+	red 8 stock: 100
 
+	exclude
+	red 5 6 7 8
+	blue 5 6 7 8 9 10 11 12
 
-接口和样式独立
+	x 商品类型
+	普通商品
+	可配置商品 (多变量)
+	分组商品
+	虚拟商品
+	捆绑商品（【推荐】商品？）
 
-> 商品属性 设计 <
-color: red blue white black green
- size:  5 6 7 8 9 10 11 12
+	可下载商品
+	指定类型，映射付款后的操作
 
- red 5 stock: 200
- red 6 stock: 0
- red 7 stock: 12
- red 8 stock: 100
+	x 商品字段设计
+	proudct
+	id/parent-id/sku/store/title/imgs/option/short-des/long-detail/categroy/
+	related -> related group ? id/aim_id(product_id)/group_tag(related/flashsale)/group_content(products_id)/
+	reviews -> 单独表
 
-red 5 6 7 8
-blue 5 6 7 8 9 10 11 12
- 当 启用库存时候
-
- 普通商品
- 可配置商品 (多变量)
- 分组商品
- 虚拟商品
- 捆绑商品（【推荐】商品？）
- 
- 可下载商品
- 指定类型，映射付款后的操作
+	product customer field
+	id/field_name/field_des
+	id/product_id/field_id/field_value
 
  > 购物车设计 <
-1. fingerprintjs
-2. localstorage
-3. 特殊验证
+ 	x 客户追踪
+	fingerprintjs
+	localstorage
+	特殊验证
