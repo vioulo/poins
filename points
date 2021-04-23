@@ -12,6 +12,7 @@ git show
 git branch -a
  忽略文件的权限
 -git config core.filemode false
+-git config --global core.fileMode false
 
 > php <
 发现 post 请求没有 session，判断是权限的问题，结果不是，应该是软件安装过程中 php 包的顺序不对引起的
