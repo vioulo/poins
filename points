@@ -48,6 +48,9 @@ Answer yes when prompted to complete installation of PHP 7.4 on Debian 10 / Debi
 
 > mysql <
 mysql_secure_installation
+CREATE USER 'mag'@'localhost' IDENTIFIED BY 'magento';
+GRANT ALL ON magento.* TO 'mag'@'localhost';
+FLUSH PRIVILEGES;
 
 > Install Elasticsearch <
 https://www.onitroad.com/jc/archive/how-to-install-elasticsearch-on-debian.html
@@ -68,6 +71,8 @@ curl -X GET "http://localhost:9200/?pretty"
   x uuid
 - cat /proc/sys/kernel/random/uuid
 - uuidgen | sed 's/-//g'
+  查询系统已经安装的wps软件
+- dpkg -l | grep wps 
 
 > alias <
 -vim ~/.bashrc
@@ -78,18 +83,18 @@ curl -X GET "http://localhost:9200/?pretty"
 > docke <
  sudo usermod -aG docker $USER
 
-> mysql <
-mysql_secure_installation
-CREATE USER 'mag'@'localhost' IDENTIFIED BY 'magento';
-GRANT ALL ON magento.* TO 'mag'@'localhost';
-FLUSH PRIVILEGES;
-
 > magento <
  after install completed
 -php bin/magento setup:di:compile
 -bin/magento setup:static-content:deploy -f
 -bin/magento cron:install
 -bin/magento cron:run
+  build moudel
+  -bin/magento module:status
+  -bin/magento module:enable Mageplaza_HelloWorld
+  -bin/magento setup:upgrade
+  -bin/magento setup:static-content:deploy
+
 
 -bin/magento deploy:mode:show
 -bin/magento deploy:mode:set developer / production
