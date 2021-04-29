@@ -110,3 +110,7 @@ curl -X GET "http://localhost:9200/?pretty"
 > ufw <
 apt install ufw
 https://github.com/Paul-Reed/cloudflare-ufw
+
+
+要在Plasma上创建全屏启动器，请将Application Dashboard小部件添加到您的喷射器或桌面。添加后，您将有一个按钮可以访问它。在KDE 4.x上，安装Homerun软件包，该软件包在/ usr / bin中提供了一个文件，可用于启动类似的界面。
+

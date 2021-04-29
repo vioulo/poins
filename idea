@@ -4,6 +4,10 @@
 				   /_imgs group - icon group
 	back-end group_/_product groups          _\ api  - front-end
 				   \_ other group            /
+	
+	query group  _event --- view
+	front-end __/_request --- view
+			    \_response --- view
 
 > proudct design <
 	x 商品属性设计
