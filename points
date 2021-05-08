@@ -48,10 +48,19 @@ Answer yes when prompted to complete installation of PHP 7.4 on Debian 10 / Debi
 -sudo apt-cache search php8.0
 
 > mysql <
-mysql_secure_installation
-CREATE USER 'mag'@'localhost' IDENTIFIED BY 'magento';
-GRANT ALL ON magento.* TO 'mag'@'localhost';
-FLUSH PRIVILEGES;
+  mysql_secure_installation
+  CREATE USER 'mag'@'localhost' IDENTIFIED BY 'magento';
+  GRANT ALL ON magento.* TO 'mag'@'localhost';
+  FLUSH PRIVILEGES;
+
+  查看当前MySQL 支持的字符集
+  SHOW CHARACTER SET;
+  SHOW CHARACTER SET LIKE 'utf8';
+  查看校对规则名
+  SHOW COLLATION;
+  SHOW COLLATION WHERE Charset = 'utf8';
+
+  CREATE DATABASE world CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 > Install Elasticsearch <
 https://www.onitroad.com/jc/archive/how-to-install-elasticsearch-on-debian.html
