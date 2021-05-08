@@ -36,8 +36,8 @@
 
 	x 商品字段设计
 	proudct
-	id/parent-id/sku/store/title/imgs/option/short-des/long-detail/categroy/
-	related -> related group ? id/aim_id(product_id)/group_tag(related/flashsale)/group_content(products_id)/
+	id/parent-id/sku/store/title/imgs/option/short-des/long-detail/category/
+	related -> related group model ? id/group_tag(related/flashsale)/group_content({product_id, product_ids}/created_at/updated_at
 	reviews -> 单独表
 
 	product customer field
@@ -46,6 +46,7 @@
 
  > 购物车设计 <
  	x 客户追踪
+	强制登录
 	fingerprintjs
 	localstorage
 	特殊验证
@@ -56,3 +57,23 @@
 	语言组，商品分类，库存启用
 	站点设置
 	多用户
+
+	- user_group
+	id,num_member,quota,num_current,created_at,updated_at
+	- user
+	id,group_id,uname,is_boss,status,email,passkey,created_at,updated_at
+	- proudct
+	id,title,source_url,source_id,shop_url,price,currency,optiongp,imgs,attributes,content,add_count,created_at,updated_at
+		- optiongp json {img:'',option:'',voption:''price:'',stock:''}
+		- attributes json {option:voption}
+	- user_product
+	id,user_id,product_id,created_at
+	- product_user
+	id,title,source_url,source_id,shop_url,price,currency,optiongp,imgs,attributes,content,sku,language,status,enable_stock,editor_id,created_at,updated_at
+	- product_cate
+	id,group_id,site_id,category,created_at,updated_at
+	- user_site
+	id,group_id,site_name,site_url,site_veri,currency,date_zone,created_at,updated_at
+	- setting
+	id,group_id,stag,svalue,created_at,updated_at
+	价格规则
