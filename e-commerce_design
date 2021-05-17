@@ -1,0 +1,64 @@
+
+- 20210517
+
+catalog - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify/statistics/extension/setting(location/currency/transport/)
+
+> user
+> user_group
+> user_balance <?balance_type:gif, aim_id:123, discount:1234, expire_at:timestamp>
+> user_wishlist
+
+> source_group <?id/g_tag/g_cont({})/created_at/updated_at>
+
+> product
+> product_content
+> product_extra <?id/product_id/sku,img,title,option,option_value,regular_price,sale_price,status,stock,describe/>
+> product_related
+> product_category
+> product_tag ?
+> product_attribute ?
+> product_attribute_group ?
+> product_option
+> product_option_group
+> review
+> taxes (全局配置-具体商品配置)
+
+> reward (bind user_group ?)
+	- coupon (启用-按照顺序计算)
+	- points ?
+	- gif ? (need bind product)
+
+> share
+
+> page (informations article)
+
+> media (images/video)
+
+> order
+> order_status
+
+> payment
+
+> extra_cost (bind user_group / user_zone ?)
+	- taxes
+	- transport (exclude_zone 某种物流方式除去某些位置)
+
+> notify <?notify_type:email, content:email_model_2, when:order_processing, times:1>
+	- notify node ? - when
+	- email_model
+	- send_email
+	- log_email
+
+> statistics
+
+> extension
+
+> admin
+> admin_group
+
+> setting
+	- location (销售目的地-根据 IP 确定 、语言选项、时区)
+	- currency (小数位 *分两位存储)
+	- email
+
+> i18n
