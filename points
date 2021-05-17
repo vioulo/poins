@@ -1,16 +1,96 @@
 
+> 正则 <
+str.replace(/[^0-9\;]/ig,"");
+str.replace(/<[^>]+>/g,""); // 取出 html
+/(?<=i\/).*?(?=\/)/ // 两个特殊符号之间的内容
+var str = 'trem-1234';
+var s=/\w+\-(\d+)/.exec(str);
+
 > css <
 font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', 'Helvetica Neue', 'Arial', sans-serif;
 .blue-gradient-background {
     background: linear-gradient(135deg, rgba(80, 122, 196, 1) 43%, rgba(128, 192, 226, 1) 89%);
     background-color: rgb(80, 122, 196);
 }
+# 棋盘
+background: repeating-conic-gradient(#ddd 0deg 25%, white 0deg 50%);
+background-size: 60px 60px;
+
+> js <
+# 20190410 一句话搞定5星评分
+"★★★★★☆☆☆☆☆".substring(5 - rating, 10 - rating);
+
+# 数组去重 https://dmitripavlutin.com/javascript-array-from-applications/
+function unique(array) {
+return Array.from(new Set(array));
+}
+unique([1, 1, 2, 3, 3]); // => [1, 2, 3]
+
+# 合并对象
+let form = {name: 'liming', sex: '男'};
+let obj = {class: '一班', age: 15};
+Object.assign(form, obj);
+
+# 对象转 json
+JSON.stringify(obj);
+
+# 判断 js 对象是不是数组
+var arr = [1,2,3,1];
+alert(arr instanceof Array); // true
+alert(arr.constructor === Array); // true
+
+# 检测数组 site 是否包含 runoob
+let site = ['runoob', 'google', 'taobao'];
+site.includes('runoob'); // true 
+
+# console.log / color
+console.log("%c U %c Want something shining ",'background: linear-gradient(to right, #09f0fb, #047edf);color:#fff;border-radius:2px 0 0 2px', 'background:#673ab7;border-radius:0 2px 2px 0; color:#fff;');
+- 'background: linear-gradient(to right, #09f0fb, #047edf);color:#fff;border-radius:2px 0 0 2px', 'background: linear-gradient(to right, #047edf, #b66dff);border-radius:0 2px 2px 0; color:#fff;' - #673ab7
+#var OriginTitile = document.title, st;
+document.addEventListener("visibilitychange", function () {document.hidden ? (document.title = "看不见我🙈~看不见我🙈~", clearTimeout(st)) :
+(document.title = "(๑•̀ㅂ•́) ✧被发现了～", st = setTimeout(function () {document.title = OriginTitile}, 3e3))})
 
 > git <
-git log --pretty=oneline 文件名
-git show
+git config --global user.email 'vioulo@outlook.com'
+git config --global user.name 'V'
+git config --global core.editor vim
+
+git fetch --all  #下载远程的库的内容，不做任何的合并 
+git reset --hard origin/master #把HEAD指向刚刚下载的最新的版本
+git pull
+
+先修改 .gitignore
+再清空 git 缓存
+git rm -r --cached .
+git add .
+git commit -m 'update .gitignore'
+
 git branch -a
- 忽略文件的权限
+git checkout -b new_branch
+git checkout master
+
+git branch -d new_branch
+git push origin --delete new_branch
+
+# 撤销 git add 
+git reset HEAD +xxx
+
+# 撤销 git commit
+git reset --xx
+--mixed 不删除工作空间改动代码，撤销commit，并撤销git add . 默认参数， 等价于 git reset HEAD^
+--soft  不删除工作空间改动代码，撤销commit，不撤销git add .
+--hard    删除工作空间改动代码，撤销commit，并撤销git add .
+# 丢弃工作区的修改 git checkout -- <file>
+# git 远程仓库回退版本
+1.首先将本地仓库版本回退到自己想要的版本。git log
+2.回退本地版本库 git reset commit_id
+3.将回退后的版本强制推送到远程仓库。git push -f origin master
+
+# 查看某个文件的修改
+git log --pretty=oneline 文件名
+git show hash
+
+# 忽略文件的权限
 -git config core.filemode false
 -git config --global core.fileMode false
 
@@ -46,21 +126,82 @@ Answer yes when prompted to complete installation of PHP 7.4 on Debian 10 / Debi
 -sudo apt update
 -sudo apt install php8.0- {扩展名}
 -sudo apt-cache search php8.0
+> laravel <
+laravel.com
+php artisan key:generate
+php artisan storage:link
+supervisorctl restart laravel-worker:*
+
+laravel-nginx-routes-setup
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
+* * * * * root /usr/bin/php7.2 /var/www/console/artisan schedule:run >> /dev/null 2>&1
+
+> composer <
+composer config -g repo.packagist composer https://packagist.phpcomposer.com
+composer config repo.packagist composer https://packagist.phpcomposer.com
+composer config -g --unset repos.packagist
 
 > mysql <
-  mysql_secure_installation
-  CREATE USER 'mag'@'localhost' IDENTIFIED BY 'magento';
-  GRANT ALL ON magento.* TO 'mag'@'localhost';
-  FLUSH PRIVILEGES;
+mysql_secure_installation
+mysql -uroot -p
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';
+FLUSH PRIVILEGES;
 
-  查看当前MySQL 支持的字符集
-  SHOW CHARACTER SET;
-  SHOW CHARACTER SET LIKE 'utf8';
-  查看校对规则名
-  SHOW COLLATION;
-  SHOW COLLATION WHERE Charset = 'utf8';
+SET PASSWORD FOR 'sds20121214xc'@'localhost' = PASSWORD('srs@20191214');
 
-  CREATE DATABASE world CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+# import sql file
+source /home/xxx.sql
+mysql -u用户名 -p密码 数据库名 < 数据库名.sql
+# export sql to file
+mysqldump -u用户名 -p密码 数据库名 表名 > data.sql
+
+# 数据库中避免存储 null 值；not in 等一些 sql 处理值时候容易出错 也要注意相对应的数据类型
+# 写入重复数据、删除、rollback 会导致自增 ID 不连续
+# update erp_odp_tracking set odp_id =(select odp_id from erp_purchase where id=erp_odp_tracking.pur_id)
+
+# 截取字符串 SUBSTRING(fields, start, length)
+# 格式化时间 FROM_UNIXTIME(created_at, '%Y%m%d') /  UNIX_TIMESTAMP('2009-08-06')
+# 更新表的字符集 ALTER TABLE `log_stock` COLLATE='utf8mb4_unicode_ci';
+# SELECT * FROM `v9_category_attribute` WHERE title_cn REGEXP BINARY  '[A-Z]';
+# UPDATE products AS p LEFT JOIN (SELECT * FROM product_metas WHERE SUBSTRING(sku,1,LOCATE('-', sku)-1) = '' GROUP BY epid) AS t on t.epid = p.id SET p.sku = t.sku
+# ALTER TABLE st_log auto_increment = 22;
+# SELECT ROUND((total+trans_fee+fee_lines)*0.009197, 2) AS totals, CONCAT(c.last_name,c.first_name) AS customer, ca.email AS totals
+into outfile '/var/www/console/storage/excel/bs-bi-ic.xlsx'
+FROM erp_orders AS o
+LEFT JOIN cus_tomer AS c ON c.id = o.ecid
+LEFT JOIN cus_address AS ca ON ca.id = o.ecaid
+WHERE order_site IN('bsc', 'bii', 'ich');
+# UPDATE erp_order_prm SET content = CONCAT('<div class="pm-text">', content, '</div>') WHERE id < 12;
+# update erp_order_track set numb = Replace(numb, '-', '') where numb like '%-%' and (id > 11192 and id < 13130);
+# 20200115
+SELECT o.order_id,from_unixtime(o.order_at),CONCAT(c.last_name,c.first_name) AS customer,o.total, ca.country,sum(op.quantity) AS qty,p.sgname,t.name,t.numb
+into outfile '/var/www/console/storage/logs/bs.xlsx'
+FROM erp_orders AS o LEFT JOIN erp_order_products AS op ON op.eoid = o.id
+LEFT JOIN cus_tomer AS c ON c.id = o.ecid
+LEFT JOIN cus_address AS ca ON ca.id = o.ecaid
+LEFT JOIN product_metas AS pm ON pm.id = op.meta_id
+LEFT JOIN products AS p ON p.id = pm.epid
+LEFT JOIN erp_order_track AS t ON t.order_id = o.id
+WHERE o.order_site ='bsc' AND o.status='completed' and op.quantity IS NOT NULL AND o.id > 24810
+GROUP BY o.id
+ORDER BY o.id DESC
+
+mysql_secure_installation
+CREATE USER 'mag'@'localhost' IDENTIFIED BY 'magento';
+GRANT ALL ON magento.* TO 'mag'@'localhost';
+FLUSH PRIVILEGES;
+
+查看当前MySQL 支持的字符集
+SHOW CHARACTER SET;
+SHOW CHARACTER SET LIKE 'utf8';
+查看校对规则名
+SHOW COLLATION;
+SHOW COLLATION WHERE Charset = 'utf8';
+
+CREATE DATABASE world CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 > Install Elasticsearch <
 https://www.onitroad.com/jc/archive/how-to-install-elasticsearch-on-debian.html
@@ -71,6 +212,44 @@ curl -X GET "http://localhost:9200/?pretty"
 2、sudo update-alternatives --config php
 
 > linux <
+# 查找含有某字符串的所有文件
+grep -rn "hello,world!" *
+
+# shell 脚本开头
+#!/bin/bash
+
+#查看目录大小
+du -sh /dir
+
+#查看目录文件数量
+ls -l|grep "^-"| wc -l
+
+ln -s 源目录 目标快捷方式
+
+netstat -ntulp |grep 80
+
+free -h
+ps aux --sort -rss
+
+# 查看逻辑 CPU 个数
+cat /proc/cpuinfo |grep "processor"| wc -l
+
+# 系统最大可打开的文件数
+ulimit -a|grep "open files"
+
+# 设置 系统最大可打开的文件数
+ulimit -n 5120
+
+# 20200725 1922
+查看链接数
+netstat -pnt | grep :80 | wc -l
+netstat -pnt | grep :443 | wc -l
+
+# 显示服务器上所有的每个IP多少个链接数
+netstat -ntu | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n
+
+convert 645737.jpg -resize 100x100 645737.jpg
+
   x debian
   清除卸载残留
 - apt purge
@@ -84,7 +263,7 @@ curl -X GET "http://localhost:9200/?pretty"
   查询系统已经安装的wps软件
 - dpkg -l | grep wps 
 
-> alias <
+ x alias
 -vim ~/.bashrc
 -source ~/.bashrc
 -alias -p
@@ -105,7 +284,6 @@ curl -X GET "http://localhost:9200/?pretty"
   -bin/magento setup:upgrade
   -bin/magento setup:static-content:deploy
 
-
 -bin/magento deploy:mode:show
 -bin/magento deploy:mode:set developer / production
 
@@ -122,4 +300,3 @@ https://github.com/Paul-Reed/cloudflare-ufw
 
 
 要在Plasma上创建全屏启动器，请将Application Dashboard小部件添加到您的喷射器或桌面。添加后，您将有一个按钮可以访问它。在KDE 4.x上，安装Homerun软件包，该软件包在/ usr / bin中提供了一个文件，可用于启动类似的界面。
-
