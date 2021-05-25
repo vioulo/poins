@@ -58,12 +58,17 @@
 	站点设置
 	多用户
 
+	- pricing
+	id,price_name,describe{quota},updated_at
 	- user_group
-	id,num_member,quota,num_current,created_at,updated_at
+	id,price_id,num_member,num_current,created_at,updated_at
 	- user
 	id,group_id,uname,is_boss,status,email,passkey,created_at,updated_at
 	- proudct
 	id,title,source_url,source_id,shop_url,price,currency,optiongp,imgs,attributes,content,add_count,created_at,updated_at
+	- product_contents
+	- product_option
+	- product_attributes
 		- optiongp json {img:'',option:'',voption:''price:'',stock:''}
 		- attributes json {option:voption}
 	- user_product
@@ -77,6 +82,7 @@
 	- setting
 	id,group_id,stag,svalue,created_at,updated_at
 	价格规则
+	时区
 
 > SQL 生成工具 <
 	linux 上没有好用的图形化数据库管理工具，创建数据表需要自己来写
