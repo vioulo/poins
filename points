@@ -212,6 +212,11 @@ curl -X GET "http://localhost:9200/?pretty"
 2、sudo update-alternatives --config php
 
 > linux <
+1：uname -a（查看版本当前操作系统内核信息）
+2：sudo cat /proc/version（查看当前操作系统版本信息）
+3：cat /etc/issue.
+4：cat /etc/os-release（查看版本当前操作系统发行版信息
+
 # 查找含有某字符串的所有文件
 grep -rn "hello,world!" *
 
