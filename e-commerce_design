@@ -62,3 +62,12 @@ catalog - /user/product/taxes/reward/coupon/share/page/media/order/payment/notif
 	- email
 
 > i18n
+
+# pages
+#前台
+/home index theme?
+/user register login social_login logout index order wishilist returns cart rewards addressbook forgeotten-password *用户主页看下淘宝等的登录主页
+/隐私政策等页面
+/cart mini-cart full-cart
+/products index categroy theme?
+/extension/payment ?
