@@ -34,6 +34,10 @@ Object.assign(form, obj);
 # 对象转 json
 JSON.stringify(obj);
 
+# 判断对象是否为空
+1. JSON.stringify(obj) === '{}'
+2. Object.keys(obj).length === 0
+
 # 判断 js 对象是不是数组
 var arr = [1,2,3,1];
 alert(arr instanceof Array); // true
