@@ -77,7 +77,7 @@ git branch -d new_branch
 git push origin --delete new_branch
 
 # 撤销 git add 
-git reset HEAD +xxx
+git reset <file>
 
 # 撤销 git commit
 git reset --xx
