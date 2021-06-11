@@ -93,3 +93,15 @@ ESC 关闭弹窗
 zencart opencart woocommer pay2p 支付插件的文档
 opencart 上传样例商品
 opencart A 站首页商品块修改
+
+20210611
+上传 opencart 样例商品
+opencart 、zencart 数据表分析
+测试从 zencart 导商品数据到 opencart
+在 opencart 里编写刷新图片数据的代码
+整理 opencart 单独为仓库
+将 刷新图片的代码 写入新分支，写操作文档
+整理 zencart 站点文件
+
+code 功能分析
+opencart 、 zencart 样例站数据生成打包
