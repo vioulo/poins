@@ -84,7 +84,11 @@ git reset --xx
 --mixed 不删除工作空间改动代码，撤销commit，并撤销git add . 默认参数， 等价于 git reset HEAD^
 --soft  不删除工作空间改动代码，撤销commit，不撤销git add .
 --hard    删除工作空间改动代码，撤销commit，并撤销git add .
-# 丢弃工作区的修改 git checkout -- <file>
+
+# 丢弃工作区的修改
+git checkout -- <file>
+git clean -d -f <file>
+
 # git 远程仓库回退版本
 1.首先将本地仓库版本回退到自己想要的版本。git log
 2.回退本地版本库 git reset commit_id
