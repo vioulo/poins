@@ -7,8 +7,9 @@
 0 首先，清空下列 opencart 数据表 -> truncate table
 | oc_category_description       |
 | oc_category                   |
+| oc_category_path              |
 | oc_category_to_layout         |
-| oc_category_to_layout         |
+| oc_category_to_store          |
 
 | oc_option                     |
 | oc_option_description         |
@@ -29,15 +30,19 @@
 | oc_product_image              | *
 | oc_product_option             |
 | oc_product_option_value       |
+| oc_product_special            |
 
 | oc_product_to_category        |
 | oc_product_to_layout          |
 | oc_product_to_store           |
 
+| oc_review                     |
+
 0 接着在 opencart 数据库中执行以下 SQL，注意区分数据库(表)名称
 # opencart category
 insert into oc_category_description (category_id,language_id,name,meta_title,description,meta_description,meta_keyword)  select categories_id, 1, categories_name, categories_name, '', '','' from zcart0.categories_description;
 insert into oc_category (category_id,top,`column`,status,date_added,date_modified) select category_id,0,1,1,'2021-06-09 09:19:53','2021-06-09 09:19:53' from oc_category_description;
+insert into oc_category_path (category_id,path_id,level) select category_id,category_id,0 from oc_category;
 insert into oc_category_to_layout (category_id,store_id,layout_id) select category_id,0,0 from oc_category;
 insert into oc_category_to_store (category_id,store_id) select category_id,0 from oc_category;
 
@@ -53,9 +58,13 @@ insert into oc_product (product_id,model,quantity,image,price,status,sku,upc,ean
 insert into oc_product_description (product_id,language_id,name,description,meta_title,tag,meta_description,meta_keyword) select products_id,1,products_name,products_description,products_name,'','','' from zcart0.products_description;
 insert into oc_product_option (product_id,option_id,value,required) select product_id,1,'',1 from oc_product;
 insert into oc_product_option_value (product_option_id,product_id,option_id,option_value_id,quantity,subtract,price,price_prefix,points,points_prefix,weight,weight_prefix) select product_option_id,product_id,option_id,options_values_id,100,1,0,'+',0,'+',0,'+' from zcart0.products_attributes as zpa left join ocart1.oc_product_option as opo on opo.product_id = zpa.products_id;
+insert into oc_product_special (product_id,customer_group_id,price) select products_id,1,products_price_sorter from (select products_id,products_price,products_price_sorter from zcart0.products) as c;
 insert into oc_product_to_category select * from zcart0.products_to_categories;
 insert into oc_product_to_layout select product_id,0,0 from oc_product;
 insert into oc_product_to_store select product_id,0 from oc_product;
+
+# 如果商品没有 option
+truncate oc_product_option
 
 0 将 zencart 的商品图片复制到 opencart 的图片路径，保存在具体的文件夹中
 |- cp -r zencart/images/\*  opencart/image/zen_img/
@@ -74,27 +83,35 @@ public function refresh_zimg() {
 	$msg = '';
 
 	if (!$check) {
-		
+
 		$this->load->model('catalog/product');
 
 		$data = $this->model_catalog_product->getProductMainImages();
 		$this->get_img_path(DIR_IMAGE."zen_img");
-		
+
 		$local_path = '';
 		$query_path = '';
 		$sql = '';
+		$del = true;
 
 		foreach($this->zen_img as $z) {
 			$local_path = substr($z, 0, strrpos($z, "."));
+			$del = true;
 			foreach($data as $d) {
 				$query_path = substr($d['image'], 0, strrpos($d['image'], "."));
 				if (strstr($local_path, $query_path)) {
+					$z = substr($z, strrpos($z, "zen_img"));
 					$sql .= "({$d['product_id']}, '{$z}'),";
+					$del = false;
 				}
 			}
+			if ($del) {
+				@unlink($z);
+			}
 		}
+
 		$sql = rtrim($sql, ',');
-		
+
 		$this->model_catalog_product->insertProductImages($sql);
 		$msg = '操作已在执行，请稍后刷新商品页面查看';
 		$this->model_setting_setting->insertSetting('refresh_zimg', 'is_done', 'yes');
@@ -112,15 +129,14 @@ protected function get_img_path($path) {
 	$temp = scandir($path);
 
 	foreach($temp as $v) {
-		
+
 		$child = $path . '/' . $v;
 		if(is_dir($child)) {
 
 			if($v == '.' || $v == '..') continue;
-			$this->zen_top = $v;
 			$this->get_img_path($child);
 		} else {
-			$this->zen_img[] = 'zen_img/'. $this->zen_top . '/' . $v;
+			$this->zen_img[] = $child;
 		}
 	}
 }
