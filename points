@@ -197,11 +197,6 @@ WHERE o.order_site ='bsc' AND o.status='completed' and op.quantity IS NOT NULL A
 GROUP BY o.id
 ORDER BY o.id DESC
 
-mysql_secure_installation
-CREATE USER 'mag'@'localhost' IDENTIFIED BY 'magento';
-GRANT ALL ON magento.* TO 'mag'@'localhost';
-FLUSH PRIVILEGES;
-
 查看当前MySQL 支持的字符集
 SHOW CHARACTER SET;
 SHOW CHARACTER SET LIKE 'utf8';
