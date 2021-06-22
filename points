@@ -99,8 +99,8 @@ git log --pretty=oneline 文件名
 git show hash
 
 # 忽略文件的权限
--git config core.filemode false
--git config --global core.fileMode false
+git config core.filemode false
+git config --global core.fileMode false
 
 > php <
 发现 post 请求没有 session，判断是权限的问题，结果不是，应该是软件安装过程中 php 包的顺序不对引起的
@@ -127,13 +127,14 @@ Answer yes when prompted to complete installation of PHP 7.4 on Debian 10 / Debi
 - apt install php7.4-common php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-opcache
 
 > debian install php8.0 <
--sudo apt install -y lsb-release apt-transport-https ca-certificates wget
--sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
--echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+sudo apt install -y lsb-release apt-transport-https ca-certificates wget
+sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
 
--sudo apt update
--sudo apt install php8.0- {扩展名}
--sudo apt-cache search php8.0
+sudo apt update
+sudo apt install php8.0- {扩展名}
+sudo apt-cache search php8.0
+
 > laravel <
 laravel.com
 php artisan key:generate
@@ -159,6 +160,8 @@ GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';
 FLUSH PRIVILEGES;
 
 SET PASSWORD FOR 'sds20121214xc'@'localhost' = PASSWORD('srs@20191214');
+
+watch -n 0.3 "mysql -e 'SHOW PROCESSLIST;' -u root -pf4f956de10d78f55 "
 
 # import sql file
 source /home/xxx.sql
@@ -211,8 +214,8 @@ https://www.onitroad.com/jc/archive/how-to-install-elasticsearch-on-debian.html
 curl -X GET "http://localhost:9200/?pretty"
 
 > 设置默认 php 版本
-1、sudo update-alternatives --set php /usr/bin/php7.4
-2、sudo update-alternatives --config php
+1. sudo update-alternatives --set php /usr/bin/php7.4
+2. sudo update-alternatives --config php
 
 > linux <
 1：uname -a（查看版本当前操作系统内核信息）
@@ -258,45 +261,45 @@ netstat -ntu | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n
 
 convert 645737.jpg -resize 100x100 645737.jpg
 
-  x debian
-  清除卸载残留
-- apt purge
-- sudo apt-cache show apache2
-  切换桌面环境
-- sudo update-alternatives --config x-session-manager
-- sudo dpkg-reconfigure sddm
-  x uuid
-- cat /proc/sys/kernel/random/uuid
-- uuidgen | sed 's/-//g'
-  查询系统已经安装的wps软件
-- dpkg -l | grep wps 
+x debian
+清除卸载残留
+  apt purge
+  sudo apt-cache show apache2
+切换桌面环境
+  sudo update-alternatives --config x-session-manager
+  sudo dpkg-reconfigure sddm
+x uuid
+  cat /proc/sys/kernel/random/uuid
+  uuidgen | sed 's/-//g'
+查询系统已经安装的wps软件
+  dpkg -l | grep wps 
 
  x alias
--vim ~/.bashrc
--source ~/.bashrc
--alias -p
--unalias
+  vim ~/.bashrc
+  source ~/.bashrc
+  alias -p
+  unalias
 
 > docke <
  sudo usermod -aG docker $USER
 
 > magento <
  after install completed
--php bin/magento setup:di:compile
--bin/magento setup:static-content:deploy -f
--bin/magento cron:install
--bin/magento cron:run
+php bin/magento setup:di:compile
+bin/magento setup:static-content:deploy -f
+bin/magento cron:install
+bin/magento cron:run
   build moudel
-  -bin/magento module:status
-  -bin/magento module:enable Mageplaza_HelloWorld
-  -bin/magento setup:upgrade
-  -bin/magento setup:static-content:deploy
+  bin/magento module:status
+  bin/magento module:enable Mageplaza_HelloWorld
+  bin/magento setup:upgrade
+  bin/magento setup:static-content:deploy
 
--bin/magento deploy:mode:show
--bin/magento deploy:mode:set developer / production
+bin/magento deploy:mode:show
+bin/magento deploy:mode:set developer / production
 
  Magento-2:Class Magento\Framework\App\Http\Interceptor does not exist
--bin/magento setup:di:compile
+ bin/magento setup:di:compile
 
 > vim <
 查找并替换
@@ -305,6 +308,3 @@ convert 645737.jpg -resize 100x100 645737.jpg
 > ufw <
 apt install ufw
 https://github.com/Paul-Reed/cloudflare-ufw
-
-
-要在Plasma上创建全屏启动器，请将Application Dashboard小部件添加到您的喷射器或桌面。添加后，您将有一个按钮可以访问它。在KDE 4.x上，安装Homerun软件包，该软件包在/ usr / bin中提供了一个文件，可用于启动类似的界面。
