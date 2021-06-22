@@ -87,7 +87,7 @@ git reset --xx
 
 # 丢弃工作区的修改
 git checkout -- <file>
-git clean -d -f <file>
+git clean -df <file>
 
 # git 远程仓库回退版本
 1.首先将本地仓库版本回退到自己想要的版本。git log
