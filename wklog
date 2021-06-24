@@ -117,7 +117,7 @@ AB 站，同一份文件，不同的数据库配置
 修改 opencart 支付插件的日志记录
 
 opencart 支付 missing order 问题
-
+--------------------------------------------
 20210615
 0. 菜单 - 权限
 1. 域名列表 - 新增 - 筛选
@@ -170,3 +170,11 @@ opencart 支付 missing order 问题
 -两周-
 物流相关设计(物流接口等相关操作)
 
+--------------------------------------------
+牛魔王重复订单的问题
+alter table odr add ohash varchar(48) default('');
+
+牛魔王统计
+select source, receiver_email, nme, SUBSTRING(add_time, 1, 10) as add_time from odr as o left join aweb on aweb.id = o.aid left join store on store.id = aweb.pid limit 1;
+
+Roger denwaus.com 网站的一些修改
