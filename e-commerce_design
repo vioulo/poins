@@ -71,3 +71,11 @@ catalog - /user/product/taxes/reward/coupon/share/page/media/order/payment/notif
 /cart mini-cart full-cart
 /products index categroy theme?
 /extension/payment ?
+
+# 重复订单的问题 (非成功状态)
+订单的属性：谁在什么时候购买了什么商品，使用了什么支付方式，使用什么物流运往什么地方，是否使用优惠券，当前什么状态
+[检查] 主属性：who \ products \ address > hash > (time) > status
+[更新] 可更新属性：time \ payment \ transport \ reward(coupon) \ status
+
+时间应该控制在一定范围内，比如 1 天之内的就检查重复订单，之外就重新生成订单
+将主属性 who \ products \ address 计算 hash 存储，新订单生成请求时 检查 hash，(time) 以及对应的数据行状态
