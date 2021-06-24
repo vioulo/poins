@@ -159,6 +159,8 @@ CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';
 FLUSH PRIVILEGES;
 
+MariaDB [information_schema]> select TABLE_NAME, TABLE_ROWS from TABLES WHERE TABLE_SCHEMA = 'opencart_shoes' and TABLE_ROWS > 100 ;
+
 SET PASSWORD FOR 'sds20121214xc'@'localhost' = PASSWORD('srs@20191214');
 
 watch -n 0.3 "mysql -e 'SHOW PROCESSLIST;' -u root -pf4f956de10d78f55 "
