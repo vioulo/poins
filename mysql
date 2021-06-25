@@ -1,0 +1,78 @@
+> install && init
+[install cmd] mariadb-server
+mysql_secure_installation
+
+> 新建用户与权限刷新
+mysql -uroot -p
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'newuser'@'localhost';
+FLUSH PRIVILEGES;
+SET PASSWORD FOR '20121214'@'localhost' = PASSWORD('20191214');
+
+> 查询某个数据表的数据列数
+select TABLE_NAME, TABLE_ROWS from information_schema.TABLES WHERE TABLE_SCHEMA = 'opencart_shoes' and TABLE_ROWS > 100 ;
+
+>
+watch -n 0.3 "mysql -e 'SHOW PROCESSLIST;' -u root -pf4f956de10d78f55 "
+
+> import sql file
+1. source /home/xxx.sql
+2. mysql -u用户名 -p密码 数据库名 < 数据库名.sql
+> export sql to file
+mysqldump -u用户名 -p密码 数据库名 表名 > data.sql
+
+# 数据库中避免存储 null 值；not in 等一些 sql 处理值时候容易出错 也要注意相对应的数据类型
+# 写入重复数据、删除、rollback 会导致自增 ID 不连续
+
+> 字符集与校对规则
+# 查看当前MySQL 支持的字符集
+SHOW CHARACTER SET;
+SHOW CHARACTER SET LIKE 'utf8';
+# 查看校对规则名
+SHOW COLLATION;
+SHOW COLLATION WHERE Charset = 'utf8';
+# 更新表的字符集
+ALTER TABLE `log_stock` COLLATE='utf8mb4_unicode_ci';
+
+> 创建数据库
+CREATE DATABASE world CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+> 更新表的 auto_increment
+ALTER TABLE st_log auto_increment = 22;
+
+> 从查询结果中更新字段
+update erp_odp_tracking set odp_id =(select odp_id from erp_purchase where id=erp_odp_tracking.pur_id)
+UPDATE products AS p LEFT JOIN (SELECT * FROM product_metas WHERE SUBSTRING(sku,1,LOCATE('-', sku)-1) = '' GROUP BY epid) AS t on t.epid = p.id SET p.sku = t.sku
+
+> 格式化时间
+FROM_UNIXTIME(created_at, '%Y%m%d') /  UNIX_TIMESTAMP('2009-08-06')
+
+> 查询包含大写字母的字段
+SELECT * FROM `category_attribute` WHERE title_cn REGEXP BINARY  '[A-Z]'; #REGEXP 正则 #BINARY 强制区分大小写
+
+> 计算、连接字符串、导出文件
+# SELECT ROUND((total+trans_fee+fee_lines)*0.009197, 2) AS totals, CONCAT(c.last_name,c.first_name) AS customer, ca.email AS totals
+into outfile '/var/www/console/storage/excel/bs-bi-ic.xlsx'
+FROM erp_orders AS o
+LEFT JOIN cus_tomer AS c ON c.id = o.ecid
+LEFT JOIN cus_address AS ca ON ca.id = o.ecaid
+WHERE order_site IN('bsc', 'bii', 'ich');
+
+> 从连接的字符串更新
+UPDATE erp_order_prm SET content = CONCAT('<div class="pm-text">', content, '</div>') WHERE id < 12;
+
+> 替换字符串
+update erp_order_track set numb = Replace(numb, '-', '') where numb like '%-%' and (id > 11192 and id < 13130);
+
+# 20200115
+SELECT o.order_id,from_unixtime(o.order_at),CONCAT(c.last_name,c.first_name) AS customer,o.total, ca.country, sum(op.quantity) AS qty,p.sgname,t.name,t.numb
+into outfile '/var/www/console/storage/logs/bs.xlsx'
+FROM erp_orders AS o LEFT JOIN erp_order_products AS op ON op.eoid = o.id
+LEFT JOIN cus_tomer AS c ON c.id = o.ecid
+LEFT JOIN cus_address AS ca ON ca.id = o.ecaid
+LEFT JOIN product_metas AS pm ON pm.id = op.meta_id
+LEFT JOIN products AS p ON p.id = pm.epid
+LEFT JOIN erp_order_track AS t ON t.order_id = o.id
+WHERE o.order_site ='bsc' AND o.status='completed' and op.quantity IS NOT NULL AND o.id > 24810
+GROUP BY o.id
+ORDER BY o.id DESC

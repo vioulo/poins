@@ -1,0 +1,22 @@
+> init
+laravel.com
+php artisan key:generate
+php artisan storage:link
+supervisorctl restart laravel-worker:*
+
+laravel-nginx-routes-setup
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
+* * * * * (-user-) /usr/bin/php7.2 /var/www/console/artisan schedule:run >> /dev/null 2>&1
+
+> customize gloabl function
+// php artisan make:provider HelperServiceProvider
+// 移除 boot();
+public function register() {
+
+	foreach(glob(app_path('Helpers') . '/*.php') as $file) {
+		require_once $file;
+	}
+}
+// 打开 config/app.php，然后将 HelperServiceProvider 放在你的 AppServiceProvider 上面

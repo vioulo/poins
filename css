@@ -1,0 +1,9 @@
+> css <
+font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular', 'Helvetica Neue', 'Arial', sans-serif;
+.blue-gradient-background {
+    background: linear-gradient(135deg, rgba(80, 122, 196, 1) 43%, rgba(128, 192, 226, 1) 89%);
+    background-color: rgb(80, 122, 196);
+}
+# 棋盘
+background: repeating-conic-gradient(#ddd 0deg 25%, white 0deg 50%);
+background-size: 60px 60px;
