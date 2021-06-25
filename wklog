@@ -178,3 +178,5 @@ alter table odr add ohash varchar(48) default('');
 select source, receiver_email, nme, SUBSTRING(add_time, 1, 10) as add_time from odr as o left join aweb on aweb.id = o.aid left join store on store.id = aweb.pid limit 1;
 
 Roger denwaus.com 网站的一些修改
+
+alex 网站 商品详情的修改、footer 修改
