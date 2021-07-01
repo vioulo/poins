@@ -40,6 +40,9 @@ CREATE DATABASE world CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 > 更新表的 auto_increment
 ALTER TABLE st_log auto_increment = 22;
 
+> 向表添加字段
+ALTER TABLE <table_name> ADD <field_name> <field_type> NOT NULL DEFAULT '' COMMENT '备注信息';
+
 > 从查询结果中更新字段
 update erp_odp_tracking set odp_id =(select odp_id from erp_purchase where id=erp_odp_tracking.pur_id)
 UPDATE products AS p LEFT JOIN (SELECT * FROM product_metas WHERE SUBSTRING(sku,1,LOCATE('-', sku)-1) = '' GROUP BY epid) AS t on t.epid = p.id SET p.sku = t.sku
