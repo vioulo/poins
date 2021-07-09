@@ -10,6 +10,9 @@
 > 查找含有某字符串的所有文件
 grep -rn "hello,world!" *
 
+> 批量替换文件内容
+find -name '*.html' | xargs perl -pi -e 's|tony|star cat|g'
+
 > shell 脚本开头
 #!/bin/bash
 
