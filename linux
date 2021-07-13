@@ -7,14 +7,28 @@
 > ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "shiny@example.com"
 > ssh-keygen -t ed25519
 
+> shell 脚本开头
+#!/bin/bash
+
 > 查找含有某字符串的所有文件
 grep -rn "hello,world!" *
 
 > 批量替换文件内容
 find -name '*.html' | xargs perl -pi -e 's|tony|star cat|g'
 
-> shell 脚本开头
-#!/bin/bash
+> 生成随机内容
+1: echo $(tr -dc A-Za-z0-9 </dev/urandom | head -c $(shuf -i 8-14 -n 1) ; echo '')
+
+> uuid
+cat /proc/sys/kernel/random/uuid
+uuidgen | sed 's/-//g'
+
+> alias
+vim ~/.bashrc
+source ~/.bashrc
+
+alias -p
+unalias
 
 > 查看目录大小
 du -sh /dir
@@ -61,14 +75,3 @@ sudo dpkg-reconfigure sddm
 
 # 查询系统已经安装的 wps 软件
 dpkg -l | grep wps
-
-> uuid
-cat /proc/sys/kernel/random/uuid
-uuidgen | sed 's/-//g'
-
-> alias
-vim ~/.bashrc
-source ~/.bashrc
-
-alias -p
-unalias
