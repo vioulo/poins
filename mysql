@@ -67,6 +67,9 @@ UPDATE erp_order_prm SET content = CONCAT('<div class="pm-text">', content, '</d
 > 替换字符串
 update erp_order_track set numb = Replace(numb, '-', '') where numb like '%-%' and (id > 11192 and id < 13130);
 
+> 随机整数
+update fp_postmeta set meta_value = FLOOR(8 + RAND() * 60) where meta_key = 'total_sales' and meta_value < 50;
+
 # 20200115
 SELECT o.order_id,from_unixtime(o.order_at),CONCAT(c.last_name,c.first_name) AS customer,o.total, ca.country, sum(op.quantity) AS qty,p.sgname,t.name,t.numb
 into outfile '/var/www/console/storage/logs/bs.xlsx'
