@@ -1,7 +1,7 @@
 
 - 20210517
 
-catalog - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify/statistics/extension/setting(location/currency/transport/)
+blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify/statistics/extension/setting(location/currency/transport/)
 
 > user
 > user_group
@@ -29,6 +29,9 @@ catalog - /user/product/taxes/reward/coupon/share/page/media/order/payment/notif
 	- gif ? (need bind product)
 
 > share
+> share to your friends, you will get a coupon
+
+> sign in & lottery
 
 > page (informations article)
 
@@ -36,6 +39,12 @@ catalog - /user/product/taxes/reward/coupon/share/page/media/order/payment/notif
 
 > order
 > order_status
+> order_payment_stauts
+> order_transport_status
+> order mark
+
+> order_products
+> order_products_transport_status
 
 > payment
 
