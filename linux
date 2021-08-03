@@ -78,3 +78,9 @@ sudo dpkg-reconfigure sddm
 
 # 查询系统已经安装的 wps 软件
 dpkg -l | grep wps
+
+> /tmp 分区挂了
+# 卸载掉分区
+umount -lf /tmp
+systemctl restart systemd-tmpfiles-setup.service
+[https://www.freedesktop.org/software/systemd/man/systemd-tmpfiles.html]
