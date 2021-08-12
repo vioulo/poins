@@ -84,3 +84,6 @@ dpkg -l | grep wps
 umount -lf /tmp
 systemctl restart systemd-tmpfiles-setup.service
 [https://www.freedesktop.org/software/systemd/man/systemd-tmpfiles.html]
+
+> 查看系统时间
+timedatectl
