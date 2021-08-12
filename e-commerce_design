@@ -3,10 +3,15 @@
 
 blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify/statistics/extension/setting(location/currency/transport/)
 
-> user
-> user_group
-> user_balance  <id/user_id/balance_type/target_id/amount/created_at/updated_at/expire_at>
-> user_wishlist <id/user_id/product_id/created_at>
+> manager
+> manager_group
+
+> user <id/firstname/lastname/nickname/status/email/phone/password/avatar/birthday/description/created_at/updated_at>
+> user_address <id/uid/ads_type/country/province/city/ads_line/created_at/updated_at>
+> user_login_log <id/uid/ip_at/login_at>
+> user_group <id/ug_name/ug_condition/ug_sign> [1, 'vip1', '1000', 'xx-vip1-32*32.png']
+> user_balance  <id/uid/balance_type/target_id/amount/status/created_at/updated_at/expire_at>
+> user_wishlist <id/uid/product_id/created_at>
 
 > source_group <?id/target_id/g_tag/g_cont/created_at/updated_at>
   [1,12,'p_cate_img','xx,xx',c,u]
@@ -26,7 +31,7 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 
 > product_option <id/op_name/op_value> [1,'size','23'] [3,'color','blue']
 > product_option_group    [1,2,3;4,5,6] #为操作便利
-> review <id/product_id/user_id/rv_content/created_at/terminal?/ip_at?>
+> review <id/product_id/uid/rv_content/created_at/terminal?/ip_at?>
 
 > taxes (全局配置-具体商品配置)
 
