@@ -5,24 +5,32 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 
 > user
 > user_group
-> user_balance <?balance_type:gif, aim_id:123, discount:1234, expire_at:timestamp>
-> user_wishlist
+> user_balance  <id/user_id/balance_type/target_id/amount/created_at/updated_at/expire_at>
+> user_wishlist <id/user_id/product_id/created_at>
 
-> source_group <?id/g_tag/g_cont({})/created_at/updated_at>
+> source_group <?id/target_id/g_tag/g_cont/created_at/updated_at>
+  [1,12,'p_cate_img','xx,xx',c,u]
 
-> product
-> product_content
-> product_extra <?id/product_id/sku,img,title,option,option_value,regular_price,sale_price,status,stock,describe/>
-> product_related
-> product_category
-> product_tag ?
-> product_attribute ?
-> product_attribute_group ?
-> product_option
-> product_option_group
-> review
+> product <id/real_mul(tiple)[标记是否查询option-bind-extra]/title/p_img/p_cate_ids/p_tag_ids/regular_price/sale_price/p_point/status/stock/created_at/updated_at>
+> product_extra <product_id/p_options[1,2,3;4,5,6;7,8]/p_imgs/p_content/related_ids/taxes_id>
+> product_option_bind <id/product_id/option_id/b_type/b_value> [1,224,1,'img','xxx-32x32.jpg'] #类似于对衣服的样式选项绑定小图片
+> product_option_extra <id/product_id/option_ids/e_type/e_value> [1,224, 2,5 'title','36% OFF'] #当选择选项为 2,5 时，商品标题添加 '36% OFF'
+  e_type => sku,img,title,regular_price,sale_price,status,stock,description ···
+
+> product_category <id/cate_name/cate_level/status/created_at/updated_at>
+
+> product_tag <id/tag_name>
+
+> product_attribute <id/ab_name/ab_value> [1,'材质','泰坦合金']
+> product_attribute_group [1,2,3,4,5,6] #为操作便利
+
+> product_option <id/op_name/op_value> [1,'size','23'] [3,'color','blue']
+> product_option_group    [1,2,3;4,5,6] #为操作便利
+> review <id/product_id/user_id/rv_content/created_at/terminal?/ip_at?>
+
 > taxes (全局配置-具体商品配置)
 
+> sale promotion > 商品套餐 + 倒计时
 > reward (bind user_group ?)
 	- coupon (启用-按照顺序计算)
 	- points ?
