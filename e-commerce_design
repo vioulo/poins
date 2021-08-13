@@ -24,13 +24,14 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 
 > product_category <id/cate_name/cate_level/status/created_at/updated_at>
 
-> product_tag <id/tag_name>
+> product_sundry <id/ps_type/ps_name/ps_value>
+	[1,'attribute','材质','泰坦合金']
+	[2,'option','size','23']
+	[3,'option','color','blue']
+	[4,'tag','one piece','?action-https://salt.gold']
 
-> product_attribute <id/ab_name/ab_value> [1,'材质','泰坦合金']
-> product_attribute_group [1,2,3,4,5,6] #为操作便利
+> product_sundry_group <id/psg_cont/created_at/updated_at>
 
-> product_option <id/op_name/op_value> [1,'size','23'] [3,'color','blue']
-> product_option_group    [1,2,3;4,5,6] #为操作便利
 > review <id/product_id/uid/rv_content/created_at/terminal?/ip_at?>
 
 > sale promotion > 商品套餐 + 倒计时
