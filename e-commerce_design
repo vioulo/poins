@@ -16,8 +16,8 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 > source_group <?id/target_id/g_tag/g_cont/created_at/updated_at>
   [1,12,'p_cate_img','xx,xx',c,u]
 
-> product <id/real_mul(tiple)[标记是否查询option-bind-extra]/title/p_img/p_cate_ids/p_tag_ids/regular_price/sale_price/p_point/status/stock/created_at/updated_at>
-> product_extra <product_id/p_options[1,2,3;4,5,6;7,8]/p_imgs/p_content/related_ids/taxes_id>
+> product <id/real_mul(tiple)[标记是否查询option-bind-extra]/title/p_img/p_cate_ids/p_tag_ids/regular_price/sale_price/p_point/status/in_stock/stock/created_at/updated_at>
+> product_extra <product_id/p_options[1,2,3;4,5,6;7,8]/p_imgs/p_content/related_ids/>
 > product_option_bind <id/product_id/option_id/b_type/b_value> [1,224,1,'img','xxx-32x32.jpg'] #类似于对衣服的样式选项绑定小图片
 > product_option_extra <id/product_id/option_ids/e_type/e_value> [1,224, 2,5 'title','36% OFF'] #当选择选项为 2,5 时，商品标题添加 '36% OFF'
   e_type => sku,img,title,regular_price,sale_price,status,stock,description ···
@@ -33,13 +33,11 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 > product_option_group    [1,2,3;4,5,6] #为操作便利
 > review <id/product_id/uid/rv_content/created_at/terminal?/ip_at?>
 
-> taxes (全局配置-具体商品配置)
-
 > sale promotion > 商品套餐 + 倒计时
 > reward (bind user_group ?)
 	- coupon (启用-按照顺序计算)
 	- points ?
-	- gif ? (need bind product)
+	- gift ? (need bind product)
 
 > share
 > share to your friends, you will get a coupon
@@ -50,20 +48,21 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 
 > media (images/video)
 
-> order
-> order_status
-> order_payment_stauts
-> order_transport_status
-> order mark
+> order <id/uid/u_ads_id/status_id/currency/total/real_total/created_at/updated_at>
+> order_status <id/st_type?/st_name/st_next_ids>
+> order_sundry <id/oid/su_source[手动/订单]/su_type[coupon/gift/transport]/di_amount[+/-]/created_at>
+> order_payment_info <id/oid/trt_number[local transaction number]/ser_number[Third party serial number]/status/created_at>?
+> order_tag <id/oid/mr_id/tag_title/tag_content/created_at>
+> order_note <id/oid/notes>
 
-> order_products
-> order_products_transport_status
+> order_products <id/oid/product_id/p_options/status/quantity/price>
 
 > payment
-
-> extra_cost (bind user_group / user_zone ?)
-	- taxes
-	- transport (exclude_zone 某种物流方式除去某些位置)
+																															/--> 这不是和促销活动很像？
+> extra_cost <id/ec_type/ec_name/ec_amount_type/ec_amount[+/-?]/clude_type[in/ex]/clude_cont_type[product/proudct_category]/clude_cont/created_at/updated_at>
+	[1,'taxes','taxes1','percent','12','in','product','1,2',c,u]
+	[1,'transport','tran1','integer','12','in','zone','11,22',c,u]
+	这里的 ec_type 和 clude_cont_type 是不是得预设 ?-[user,user_group,product,product_category,zone,time,payment_amount,purchase_qty]
 
 > notify <?notify_type:email, content:email_model_2, when:order_processing, times:1>
 	- notify node ? - when
@@ -79,6 +78,7 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 	- location (销售目的地-根据 IP 确定 、语言选项、时区)
 	- currency (小数位 整数部分和小数部分分开存储？)
 	- email
+	- product include taxes ?
 
 > i18n
 
