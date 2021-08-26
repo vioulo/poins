@@ -17,29 +17,33 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
   [1,12,'p_cate_img','xx,xx',c,u]
   [1,11,'p_block', '{"page-type":"flow","per-page":"20","sort-field":"create_at","sort-type":"desc","category":21}']
 
-																																					/cate tag 是不是应该单独作表？(从分类查询商品的操作似乎不多)
-> product <id/real_mul(tiple)[标记是否查询option-bind-extra]/title/p_img/p_cate_ids/p_tag_ids/regular_price/sale_price/p_point/status/in_stock/stock/created_at/updated_at>
+> product <id/title/main_img/regular_price/sale_price/status/real_mul(tiple)[标记是否查询op-bind(1)-extra(2)(3)]/
+					limit_ids/in_stock/stock/points/ave_score/rev_count/created_at/updated_at>
 > product_extra <product_id/p_options[1,2,3;4,5,6;7,8]/p_imgs/p_content/related_ids/>
 > product_option_bind <id/product_id/option_id/b_type/b_value> [1,224,1,'img','xxx-32x32.jpg'] #类似于对衣服的样式选项绑定小图片
 > product_option_extra <id/product_id/option_ids/e_type/e_value> [1,224, 2,5 'title','36% OFF'] #当选择选项为 2,5 时，商品标题添加 '36% OFF'
   e_type => sku,img,title,regular_price,sale_price,status,stock,description ···
 
- # real_mul(tiple)/in_stock/lt_target 标记信息作为单独字段？
-> ?- product_limit <id/lt_type/lt_value/>
-	?- 限定单个商品的支付方法/运输方法/购买者
+	# limit_ids
+	# 限定商品的支付方法/运输方法/购买者/可用优惠/···
 
-> product_category <id/cate_name/cate_level/status/created_at/updated_at> | 草稿、回收站
+> product_category <id/cate_name/cate_level/limit_ids/status/created_at/updated_at> | 草稿、回收站
+  # 两级分类，cate_level 存储顶级分类的 ID，0
+  # limit_ids 商品分类相关的限制
+
+> product_category_list <id,product_id,cate_id,created_at>
+> product_tag_list <id,product_id,tag_id,created_at>
 
 > product_sundry <id/ps_type/ps_name/ps_value>
 	[1,'attribute','材质','泰坦合金']
 	[2,'option','size','23']
 	[3,'option','color','blue']
 	[4,'tag','one piece','?action-https://salt.gold']
-?-[5,'plimit','payment','paypal']
+  [5,'product_limit','payment','paypal']
 
-> product_sundry_group <id/psg_cont/created_at/updated_at>
+> product_sundry_group <id/psg_title/psg_cont/created_at/updated_at>
 
-> review <id/product_id/uid/rv_content/created_at/terminal?/ip_at?>
+> review <id/product_id/uid/rv_score/rv_content/created_at/terminal?/ip_at?>
 
 > sale promotion > 商品套餐 + 倒计时
 > reward (bind user_group ?)
