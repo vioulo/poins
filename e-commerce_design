@@ -6,7 +6,7 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 > manager
 > manager_group
 
-> user <id/firstname/lastname/nickname/status/email/phone/password/avatar/birthday/description/created_at/updated_at>
+> user <id/firstname/lastname/nickname/status/email/phone/password/avatar/birthday/v-lucky/description/created_at/updated_at>
 > user_address <id/uid/ads_type/country/province/city/ads_line/created_at/updated_at>
 > user_login_log <id/uid/ip_at/login_at>
 > user_group <id/ug_name/ug_condition/ug_sign> [1, 'vip1', '1000', 'xx-vip1-32*32.png']
@@ -46,10 +46,12 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 > review <id/product_id/uid/rv_score/rv_content/created_at/terminal?/ip_at?>
 
 > sale promotion > 商品套餐 + 倒计时
-> reward (bind user_group ?)
-	- coupon (启用-按照顺序计算)
-	- points ?
-	- gift ? (need bind product)
+	? 套餐 combo <id/product_id/bind_ids/countdown/sale_amount/deadline/created_at/updated_at>
+
+> reward <id/rd_type[coupon,gift,lucky-bag]/product_ids/limit_ids/deadline/created_at/updated_at/>
+	# limit [user_group,product_category,purchase_total,]
+
+	# 每次购物累计一个分数<v-lucky>，分数达到某个值，获得 gift
 
 > share
 > share to your friends, you will get a coupon
@@ -92,6 +94,7 @@ blocks - /user/product/taxes/reward/coupon/share/page/media/order/payment/notify
 	- email
 	- product include taxes ?
 	- 重复订单的限制时间
+	- 启用 points ? 使用优惠后商品 points 返点百分比
 
 > i18n
 
