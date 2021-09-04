@@ -1,0 +1,154 @@
+> V 20200714 对比下面的代码
+> class-wc-cart-totals.php 中 items_total, fees_total, shipping_total 具体是什么
+> Code goes in function.php file of your active child theme (or theme) or also in any plugin file.
+
+add_action('woocommerce_cart_calculate_fees', 'add_custom_discount_2nd_at_50', 10, 1 );
+function add_custom_discount_2nd_at_50( $wc_cart ){
+       if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+       $discount = 0;
+       $items_prices = array();
+
+       // Set HERE your targeted variable product ID
+       $targeted_product_id = 40;
+
+       foreach ( $wc_cart->get_cart() as $key => $cart_item ) {
+           if( $cart_item['product_id'] == $targeted_product_id ){
+               $qty = intval( $cart_item['quantity'] );
+               for( $i = 0; $i < $qty; $i++ )
+                   $items_prices[] = floatval( $cart_item['data']->get_price());
+           }
+       }
+       $count_items_prices = count($items_prices);
+       if( $count_items_prices > 1 ) foreach( $items_prices as $key => $price )
+           if( $key % 2 == 1 ) $discount -= number_format($price / 2, 2 );
+
+       if( $discount != 0 ){
+           // Displaying a custom notice (optional)
+           wc_clear_notices();
+           wc_add_notice( __("You get 50% of discount on the 2nd item"), 'notice');
+
+           // The discount
+           $wc_cart->add_fee( 'Discount 2nd at 50%', $discount, true  );
+           # Note: Last argument in add_fee() method is related to applying the tax or not to the discount (true or false)
+       }
+}
+
+add_action('woocommerce_cart_calculate_fees', 'add_custom_discount_2nd_at_50', 10, 1 );
+function add_custom_discount_2nd_at_50( $wc_cart ){
+       if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+       $discount = 0;
+
+       // Set HERE your targeted variable product ID
+       $targeted_product_id = 40;
+
+       foreach ( $wc_cart->get_cart() as $key => $cart_item ) {
+           if( $cart_item['product_id'] == $targeted_product_id ){
+               $price = $cart_item['data']->get_price();
+               $quantity = intval( $cart_item['quantity'] );
+               for( $i = 1, $j = 0; $i <= $quantity; $i++ ){
+                   if( $i % 2 == 0 &&  $quantity > 1 ) $j++;
+               }
+               if( $quantity > 1 ) number_format($discount -= $price * $j / 2, 2 );
+           }
+       }
+       if( $discount != 0 ){
+           // Displaying a custom notice (optional)
+           wc_clear_notices();
+           wc_add_notice( __("You get 50% of discount on the 2nd item"), 'notice');
+
+           $wc_cart->add_fee( 'Discount 2nd at 50%', $discount, true  );
+           # Note: Last argument in add_fee() method is related to applying the tax or not to the discount (true or false)
+       }
+}
+
+add_action('woocommerce_cart_calculate_fees', 'buy_one_get_one_free', 10, 1 );
+function buy_one_get_one_free( $wc_cart ){
+       if ( is_admin() && ! defined( 'DOING_AJAX' ) ) return;
+
+       $cart_item_count = $wc_cart->get_cart_contents_count();
+       if ( $cart_item_count < 2 ) return;
+
+       // Set HERE your coupon codes
+       $coupons_codes = array('2for1wow', 'anothercouponcode');
+       $discount = 0; // initializing
+
+       $matches = array_intersect( $coupons_codes, $wc_cart->get_applied_coupons() );
+       if( count($matches) == 0 ) return;
+
+       // Iterating through cart items
+       foreach ( $wc_cart->get_cart() as $key => $cart_item ) {
+           $qty = intval( $cart_item['quantity'] );
+           // Iterating through item quantities
+           for( $i = 0; $i < $qty; $i++ )
+               $items_prices[] = floatval( wc_get_price_excluding_tax( $cart_item['data'] ) );
+       }
+       asort($items_prices); // Sorting cheapest prices first
+
+       // Get the number of free items (detecting odd or even number of prices)
+       if( $cart_item_count % 2 == 0 ) $free_item_count = $cart_item_count / 2;
+       else  $free_item_count = ($cart_item_count - 1) / 2;
+
+       // keeping only the cheapest free items prices in the array
+       $free_item_prices = array_slice($items_prices, 0, $free_item_count);
+
+       // summing prices for this free items
+       foreach( $free_item_prices as $key => $item_price )
+           $discount -= $item_price;
+
+       if( $discount != 0 ){
+           // Displaying a custom notice (optional)
+           wc_clear_notices();
+           wc_add_notice( __( 'Custom notice on "Buy one Get one Free".' ), 'notice' );
+
+           // The discount
+           $label = '"'.reset($matches).'" '.__("discount");
+           $wc_cart->add_fee( $label, number_format( $discount, 2 ), true, 'standard' );
+           # Note: Last argument in add_fee() method is related to applying the tax or not to the discount (true or false)
+       }
+}
+
+/* The calculation:
+    *  — The count => Based on quantity by item and total of items in cart
+    *  — The percent is 0.05 (5%) and  it grows with each additional item (as you asked)
+    *  — I add the subtotal of each item line to get the total sum…
+    */
+
+function cart_progressive_discount() {
+
+       if ( is_admin() && ! defined( 'DOING_AJAX' ) )
+           return;
+
+       $cart_count = 0;
+       $cart_lines_total = 0;
+
+       foreach(WC()->cart->get_cart() as $item_key => $cart_item){
+           // Adds the quantity of each item to the count
+           $cart_count = $cart_count + $cart_item["quantity"];
+           // Adds The items subtotal to total
+           $cart_lines_total += $cart_item["line_total"];
+       }
+
+       // percent is 5%
+       $percent = -0.05;
+       // We fix the discount max to 50% (-0.05 * 10)
+       $cart_count_max = 10;
+
+       // Discount calculations:
+       $discount = $percent * $cart_count * $cart_lines_total;
+       $discount2 = $percent * $cart_count_max * $cart_lines_total;
+       $discount_text = __( 'Quantity discount', 'woocommerce' );
+
+       // For 0 or 1 item
+       if( $cart_count < 2 ) {
+           return;
+       }
+       // Between 2 and 9 items, progressive incremental discount based on item quantity (From 10% to 45%)
+       elseif( $cart_count > 1 && $cart_count < 10) {
+           WC()->cart->add_fee( $discount_text, $discount, false );
+       }
+       // Up to 9 items (Fixed discount at 50%)
+       else {
+           WC()->cart->add_fee( $discount_text, $discount2, false );
+       }
+}
+add_action( 'woocommerce_cart_calculate_fees','cart_progressive_discount' );

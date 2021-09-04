@@ -1,0 +1,10 @@
+1> update data table
+UPDATE wp_options SET option_value = replace(option_value, 'old-domain', 'new-domain') WHERE option_name = 'home' OR option_name = 'siteurl';
+UPDATE wp_posts SET guid = replace(guid, 'old-domain','new-domain');
+UPDATE wp_posts SET post_content = replace(post_content, 'old-domain', 'new-domain');
+UPDATE wp_postmeta SET meta_value = replace(meta_value,'old-domain','new-domain');
+UPDATE wp_usermeta SET meta_value = replace(meta_value, 'old-domain', 'new-domain');
+UPDATE wp_comments SET comment_content = REPLACE (comment_content, 'old-domain', 'new-domain');
+UPDATE wp_comments SET comment_author_url = REPLACE (comment_author_url, 'old-domain','new-domain');
+
+2> 重新设置 puca 的主题自定义设置

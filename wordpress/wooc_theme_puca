@@ -1,0 +1,250 @@
+
+---------------------------------------- V 20200615 sale tag START ----------------------------------------
+->[PHP]
+->修改 sale tag （折扣标签）配置不成功的问题
+->根据页面内容标记确定的的文件：wordpress/wp-content/themes/puca/woocommerce/item-product/themes/fashion/inner.php
+
+->根据上面文件前后文确定的执行操作：woocommerce_show_product_loop_sale_flash, woocommerce_before_shop_loop_item_title
+
+->根据上述操作找到：
+	->wordpress/wp-content/plugins/woocommerce/templates/content-product.php
+	->wordpress/wp-content/plugins/woocommerce/includes/wc-template-hooks.php
+	->wordpress/wp-content/plugins/woocommerce/includes/wc-template-functions.php
+	->wordpress/wp-content/plugins/woocommerce/templates/loop/sale-flash.php
+
+->页面修改 tag 的请求数据：puca_tbay_theme_options[sale_tag_custom]
+
+->wp_options: option_name: theme_mods_puca,puca_tbay_theme_options
+
+->根据文件：wordpress/wp-content/themes/puca/inc/vendors/woocommerce/functions.php
+	->puca_woo_show_product_loop_sale_flash
+	->修改最底下的 if 判断
+	->regularPrice 只有最后一个有
+	->写文件发现，存在商品变量情况的时候，puca_find_matching_product_variation 的获取内容为空
+	->改写 2535 行附近：
+	// $default_attributes = puca_get_default_attributes( $product );
+    // $variation_id       = puca_find_matching_product_variation( $product, $default_attributes );
+
+    // if( !empty($variation_id) ) {
+    $children = $product->get_children();
+    if ( !empty($children) ) {
+    	$variation_id = $children[0];
+->[CSS]
+->plan A-right-top
+/* V 20200616 SALE TAG -START- */
+.woocommerce span.onsale {
+	
+	width: unset;
+	left: unset;
+	right: -1rem;
+	top: 0;
+}
+
+.woocommerce .product-type-variable .product-block span.onsale {
+	
+	top: 0;
+	bottom: unset;
+}
+
+.woocommerce span.onsale .saled {
+	
+	line-height: 26px;
+	padding: 0 4px;
+	margin: 0;
+	background: #ff4d4d;
+}
+
+.image-mains span.onsale {
+	top: 0;
+	bottom: unset;
+}
+/* V 20200616 SALE TAG -END- */
+
+->plan B-left-bottom
+/* V 20200616 SALE TAG -START- */
+.woocommerce span.onsale {
+	
+	width: unset;
+	left: -1rem;
+	top: unset;
+	bottom: 0;
+}
+
+.woocommerce .product-type-variable .product-block span.onsale {
+	
+	top: unset;
+	bottom: 0;
+	left: -1rem;
+}
+
+.woocommerce span.onsale .saled {
+	
+	line-height: 26px;
+	padding: 0 4px;
+	margin: 0;
+	background: #ff4d4d;
+}
+
+.image-mains span.onsale {
+	top: 0;
+	bottom: unset;
+}
+/* V 20200616 SALE TAG -END- */
+---------------------------------------- V 20200615 sale tag END ----------------------------------------
+
+---------------------------------------- V 20200616 iphone7 product grid START ----------------------------------------
+wordpress/wp-content/themes/puca/css/skins/fashion/woocommerce.css 524 50->40
+---------------------------------------- V 20200616 iphone7 product grid END ----------------------------------------
+
+---------------------------------------- V 20200620 mobile add to cart START ----------------------------------------
+/* V 20200620 update mobile add to cart button -START-*/
+
+@media (max-width: 767px) {
+
+	#shop-now.has-buy-now .single_add_to_cart_button:before {
+	
+		content: unset !important;
+	}
+
+	#shop-now.has-buy-now .single_add_to_cart_button:after {
+
+		content: unset !important;
+	}
+
+	#shop-now.has-buy-now .single_add_to_cart_button {
+
+		font-size: unset !important;
+		width: 50% !important;
+		border-right: 1px solid #fff !important;
+	}
+
+	#shop-now.has-buy-now .tbay-buy-now, #shop-now.has-buy-now .disabled.tbay-buy-now {
+
+		width: 50% !important;
+		left: unset !important;
+		right: 0 !important;
+		margin: 0 !important;
+	}
+
+	#shop-now.has-buy-now .single_add_to_cart_button+.added_to_cart.wc-forward {
+
+		width: 50% !important;
+		font-size: unset !important;
+		border-right: 1px solid #fff !important;
+	}
+
+	#shop-now.has-buy-now .single_add_to_cart_button+.added_to_cart.wc-forward:before {
+
+		content: unset !important;
+	}
+
+	#shop-now.has-buy-now .single_add_to_cart_button+.added_to_cart.wc-forward:after {
+
+		content: unset !important;
+	}
+}
+/* V 20200620 update mobile add to cart button -END-*/
+---------------------------------------- V 20200620 mobile add to cart END ----------------------------------------
+
+---------------------------------------- V 20200622 scroll to product_variations START ----------------------------------------
+->[PHP]
+wordpress/wp-content/plugins/woocommerce/templates/single-product/add-to-cart/variable.php
+-> line 34 <table class="variations" cellspacing="0"> --> <table class="variations" cellspacing="0" id="variations_cust">
+wordpress/wp-content/plugins/woocommerce/includes/class-wc-frontend-scripts.php
+-> line 269 wc-add-to-cart-variation - $suffix -> ''
+
+->[JS]
+wordpress/wp-content/plugins/woocommerce/assets/js/frontend/add-to-cart-variation.js
+
+1.当前的条件分支是: .wc-variation-selection-needed
+于是总的在 VariationForm.prototype.onAddToCart 中添加了：
+variations_customer_tips();
+2.在文件末尾添加了: 
+var variations_customer_tips = function() {
+	
+	let obj = {};
+
+	$("#variations_cust tr").each(function(k, v) {
+
+		if (!obj[k]) {
+
+			obj[k] = {'item_count':0, 'not_selected':0};
+		}
+
+		$(v).find('.woo-variation-items-wrapper .variable-items-wrapper li').each(function(x, y) {
+
+			obj[k]['item_count'] ++;
+
+			if ($(y).attr('class').indexOf('selected') == -1) {
+				
+				obj[k]['not_selected'] ++;
+			}
+		});
+	});
+
+	for (let i in obj) {
+
+		let v = obj[i];
+		if (v['item_count'] == v['not_selected']) {
+
+			if ($("#variations_cust tr").eq(i).find('hr').length == 0) {
+
+				$("#variations_cust tr").eq(i).find('td').eq(1).find('ul').after('<hr style="width: 60%;margin-left: 0;margin-top: -13px;border-top: 2px solid red;">');
+			}
+
+			$("#variations_cust tr").eq(i).find('.label label').css('color', 'red');
+			$('html,body').animate({scrollTop:$('#variations_cust').offset().top+-100},1000);
+		
+		} else {
+
+			$("#variations_cust tr").eq(i).find('.label label').css('color', '#232323');
+			$("#variations_cust tr").eq(i).find('hr').remove();
+		}
+	}
+}
+---------------------------------------- V 20200622 scroll to product_variations END ----------------------------------------
+
+---------------------------------------- V 20200811 catagroy top product add star img SRT ----------------------------------------
+file /var/www/wordpress/wp-content/themes/puca/woocommerce/item-product/themes/fashion/inner.php
+在 <div class="product-content"> 下面添加：
+<?php 
+	$product_id = $product->get_id();
+	$start_sign = [
+			
+		'70839' => 'wp-content/uploads/2020/08/20200811124541.jpg',
+		'71265' => 'wp-content/uploads/2020/08/20200811124612.jpg',
+		'43521' => 'wp-content/uploads/2020/08/20200811124604.jpg',
+	];
+	if (isset($start_sign[$product_id])) {
+?>
+		<div class="start-sign">
+			<img src="<?php echo $start_sign[$product_id]; ?>">
+		</div>
+<?php } ?>
+
+---------------------------------------- V 20200811 catagroy top product add star img END ----------------------------------------
+
+
+20201210 slider menu
+
+ file: /wp-content/themes/puca/page-templates/themes/fashion/parts/offcanvas-menu.php
+after: <div class="tbay-offcanvas-body">
+
+<style type="text/css">
+	.v_cus_login {
+		padding: 16px;
+		text-align: center;
+		border: none;
+		border-bottom: 1px solid #ccc;
+	}
+	.v_cus_login .login {
+		margin-right: 8px;
+	}
+	.v_cus_login .regr {
+		margin-left: 8px;
+	}
+</style>
+<div class="v_cus_login">
+	<a class="login" href="/my-account/">ログイン</a>/
+	<a class="regr" href="/my-account/?action=register">新規登録</a>
+</div>

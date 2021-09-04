@@ -1,0 +1,39 @@
+---------------------------------------- V 20200620 discount update START ----------------------------------------
+->wordpress/wp-content/plugins/yith-woocommerce-dynamic-pricing-and-discounts-premium/includes/class-yith-wc-dynamic-discounts.php
+
+function get_discount_amount() {
+	$discount = 0;
+
+	$discount_arr = [];
+
+	if ( ! empty( $this->discount_rules ) ) {
+
+		foreach ( $this->discount_rules as $rule ) {
+
+			$new_discount = 0;
+			$subtotal     = $this->get_cart_subtotal_to_discount( $rule['rules'] );
+
+			if ( $rule['discount_type'] == 'percentage' ) {
+				$new_discount += $subtotal * $rule['discount_amount'];
+			} elseif ( $rule['discount_type'] == 'price' ) {
+				$new_discount += $rule['discount_amount'];
+			} elseif ( $rule['discount_type'] == 'fixed-price' ) {
+				$new_discount += ( $subtotal - $rule['discount_amount'] ) > 0 ? ( $subtotal - $rule['discount_amount'] ) : 0;
+			}
+
+			$discount = $new_discount;
+
+			$discount_arr[] = $discount;
+		}
+	}
+
+	if (count($discount_arr) > 1 && in_array(1000, $discount_arr)) {
+
+		$discount = $discount + 1000;
+	}
+
+	$this->discount_amount = $discount;
+
+	return $discount;
+}
+---------------------------------------- V 20200620 discount update END ----------------------------------------
