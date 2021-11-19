@@ -2,3 +2,5 @@ composer install
 composer dump-autoload -o
 
 php bin/hyperf.php server:watch
+
+php bin/hyperf.php gen:model table_name --refresh-fillable --with-comments
