@@ -6,6 +6,7 @@ php bin/hyperf.php server:watch
 php bin/hyperf.php gen:model table_name --refresh-fillable --with-comments
 
 多个表里面有名字重复的字段，查询的时候注意区分，可能偶尔报错 23000
+数据表缺少字段报错 42S22 
 
 查询结构中，when 里的 orWhere 未分组，存在混淆
 
