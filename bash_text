@@ -1,0 +1,15 @@
+cut_nginx_log
+-----------------------------------------------------------------------------------
+#!/bin/bash
+
+logs_path = "/var/log/proc/"
+pid_path = "/run/nginx/nginx.pid"
+
+# 重命名日志文件
+mv ${logs_path}access.log ${logs_path}access_$(date -d "yesterday" +"%Y%m%d").log
+
+# 向 nginx 主进程发信号重新打开日志
+kill -USR1 `cat ${pid_path}`
+-----------------------------------------------------------------------------------
+0 0 * * * root sh /var/www/cut_nginx_log.sh
+-----------------------------------------------------------------------------------
