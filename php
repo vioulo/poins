@@ -14,7 +14,7 @@ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /et
 
 sudo apt -y install php7.4
 apt install php7.4-{ xxx }
-apt install php7.4-common php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-opcache
+apt install php7.4 php7.4-common php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-mbstring php7.4-xml php7.4-xmlrpc php7.4-zip php7.4-opcache
 
 # install php8.0
 sudo apt install -y lsb-release apt-transport-https ca-certificates wget
