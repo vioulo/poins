@@ -3,6 +3,21 @@ git config --global user.email 'vioulo@outlook.com'
 git config --global user.name 'V'
 git config --global core.editor vim
 
+> 添加远程仓库
+git remote add origin https://xxx.com/project
+
+> 查看远程仓库信息
+git remote -v
+
+> 查看某一个远程仓库的信息
+git remote show remote-repository-name
+
+> 设置 http[s] 链接只询问一次账户信息
+git config [-global] credential.helper store
+
+> 拉取远程分支，并在本地新建分支，且建立映射关系
+git checkout -b local-branch remote-branch
+
 git fetch --all  #下载远程的库的内容，不做任何的合并 
 git reset --hard origin/master #把HEAD指向刚刚下载的最新的版本
 git pull
