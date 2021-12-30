@@ -1,0 +1,11 @@
+# 加载本地镜像
+docker load -i image.tar
+
+# 创建容器并运行
+docker run -idt --name <project-name> -v <all-project-path>:/apps  -v project/entrypoint.sh:/apps/entrypoint.sh -p 9501-9510:9501-9510 -e TZ="Asia/Shanghai" <image-name/id>
+
+# 列出容器
+docker ps
+
+# 进入容器
+docker exec -it <容器-ID> bin/bash
