@@ -12,11 +12,17 @@ git remote -v
 > 查看某一个远程仓库的信息
 git remote show remote-repository-name
 
+> 删除远程仓库已被移除的分支
+git remote prune repository-name
+
 > 设置 http[s] 链接只询问一次账户信息
 git config [-global] credential.helper store
 
 > 拉取远程分支，并在本地新建分支，且建立映射关系
 git checkout -b local-branch remote-branch
+
+> 推送当前分支并建立与远程上游的跟踪
+git push --set-upstream origin release/1.2.320
 
 git fetch --all  #下载远程的库的内容，不做任何的合并 
 git reset --hard origin/master #把HEAD指向刚刚下载的最新的版本
