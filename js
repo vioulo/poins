@@ -43,3 +43,9 @@ str.replace(/<[^>]+>/g,""); // 取出 html
 /(?<=i\/).*?(?=\/)/ // 两个特殊符号之间的内容
 var str = 'trem-1234';
 var s=/\w+\-(\d+)/.exec(str);
+
+> 获取字符串长度
+function codePointLength(text) {
+  var result = text.match(/[\s\S]/gu);
+  return result ? result.length : 0;
+}
