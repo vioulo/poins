@@ -3,7 +3,7 @@
 
 > 数组去重 https://dmitripavlutin.com/javascript-array-from-applications/
 function unique(array) {
-return Array.from(new Set(array));
+  return Array.from(new Set(array));
 }
 unique([1, 1, 2, 3, 3]); // => [1, 2, 3]
 
@@ -49,6 +49,13 @@ var s=/\w+\-(\d+)/.exec(str);
 # 后行断言
 /(?<=\$)\d+/.exec('Benjamin Franklin is on the $100 bill')  // ["100"]
 /(?<!\$)\d+/.exec('it’s is worth about €90')                // ["90"]
+# 具名组
+1) let {groups: {one, two}} = /^(?<one>.*):(?<two>.*)$/u.exec('foo:bar');
+one  // foo
+two  // bar
+2) let re = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/u;
+'2015-01-02'.replace(re, '$<day>/$<month>/$<year>')
+// '02/01/2015'
 
 > 获取字符串长度
 function codePointLength(text) {
