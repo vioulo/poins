@@ -1,0 +1,14 @@
+Ed25519 的安全性在 RSA 2048 与 RSA 4096 之间，且性能在数十倍以上
+ssh-keygen: OpenSSH 的组件
+生成密钥：
+ssh-keygen -t ed25519 -f my_github_ed25519 -C "me@github"
+
+ssh-keygen -t rsa -b 4096 -f my_id -C "email@example.com"
+[-t rsa] 表示使用 RSA 算法。
+[-b 4096] 表示 RSA 密钥长度 4096 bits （默认 2048 bits）。Ed25519 算法不需要指定。
+[-f my_id] 表示在【当前工作目录】下生成一个私钥文件 my_id （同时也会生成一个公钥文件 my_id.pub）。
+[-C "email@example.com"] 表示在公钥文件中添加注释，即为这个公钥“起个别名”（不是 id，可以更改）。
+在敲下该命令后，会提示输入 passphrase，即为私钥添加一个“解锁口令”
+
+* 私钥必须要有 passphrase。如果私钥文件遗失，没有 passphrase 也无法解锁
+* 应该在不同的机器上用不同的密钥，出了问题好排查处理
