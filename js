@@ -43,6 +43,12 @@ str.replace(/<[^>]+>/g,""); // 取出 html
 /(?<=i\/).*?(?=\/)/ // 两个特殊符号之间的内容
 var str = 'trem-1234';
 var s=/\w+\-(\d+)/.exec(str);
+# 先行断言
+/\d+(?=%)/.exec('100% of US presidents have been male')  // ["100"]
+/\d+(?!%)/.exec('that’s all 44 of them')                 // ["44"]
+# 后行断言
+/(?<=\$)\d+/.exec('Benjamin Franklin is on the $100 bill')  // ["100"]
+/(?<!\$)\d+/.exec('it’s is worth about €90')                // ["90"]
 
 > 获取字符串长度
 function codePointLength(text) {
