@@ -62,3 +62,5 @@ function codePointLength(text) {
   var result = text.match(/[\s\S]/gu);
   return result ? result.length : 0;
 }
+> 判断一个字符在另一个字符串中出现的次数
+'1.2.3....'.split('.').length - 1
