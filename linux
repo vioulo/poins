@@ -17,10 +17,10 @@ grep -rn "hello,world!" *
 find -name '*.html' | xargs perl -pi -e 's|tony|star cat|g'
 
 > 随机内容
-1: echo $(tr -dc A-Za-z0-9 </dev/urandom | head -c $(shuf -i 8-14 -n 1) ; echo '')
+echo $(tr -dc A-Za-z0-9 </dev/urandom | head -c $(shuf -i 8-14 -n 1) ; echo '')
 
 > 随机数
-1: echo $(((RANDOM%3)+1))
+ echo $(((RANDOM%3)+1))
 
 > uuid
 cat /proc/sys/kernel/random/uuid
@@ -36,8 +36,13 @@ unalias
 > 查看目录大小
 du -sh /dir
 
-> 查看目录文件数量
+> ls 的使用
+# 查看目录文件数量
 ls -l|grep "^-"| wc -l
+# 展示头部 20 个文件
+ls | head -n 20
+# 输出内容到文件
+ls -l  > list.txt
 
 > 新建软链接
 ln -s 源目录 目标快捷方式
@@ -90,15 +95,14 @@ timedatectl
 > 同步系统时间到硬件
 hwclock --systohc
 
-如果你只想看文件的前100行，可以使用head命令，如
+> 查看文件的前 100 行
 head -100  filename
-如果你想查看文件的后100行，可以使用tail命令，如：
+> 查看文件的后 100 行
 tail -100  filename 或 tail -n 100  filename
-查看文件中间一段，你可以使用sed命令，如：
-sed -n ‘100,200p’ filename 
-这样你就可以只查看文件的第100行到第200行。
-截取的文件可以用重定向输入到新的文件中：
-head -100  filename >a.txt
+> 查看文件中间一段
+>sed -n '100, 200p' filename 
+> 截取的文件可以用重定向输入到新的文件中：
+head -100 filename  > a.txt
 
 > 修改 kde plasma 锁屏的时间格式
 /usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/components/Clock.qml
@@ -121,15 +125,33 @@ systemctl enable --now dhcpcd # 设置开机自启并立即启动 dhcp 服务
 intel-ucode # Intel
 amd-ucode # AMD
 
-> arch
-sudo pacman -S package_name # 安装软件包
-pacman -Ss # 在同步数据库中搜索包，包括包的名称和描述
-sudo pacman -Syyu # 升级系统。-yy：标记强制刷新、-u：标记升级动作
-sudo pacman -Rns package_name # 删除软件包，及其所有没有被其他已安装软件包使用的依赖包
-sudo pacman -R package_name # 删除软件包，保留其全部已经安装的依赖关系
-pacman -Qi package_name # 检查已安装包的相关信息。-Q：查询本地软件包数据库
-pacman -Qdt # 找出孤立包。-d：标记依赖包、-t：标记不需要的包、-dt：合并标记孤立包
-sudo pacman -Rns $(pacman -Qtdq) # 删除孤立包
-sudo pacman -Fy # 更新命令查询文件列表数据库
-pacman -F some_command # 当不知道某个命令属于哪个包时，用来在远程软件包中查询某个命令属于哪个包（即使没有安装）
-pactree package_name # 查看一个包的依赖树
+! arch
+> pacman
+sudo pacman -Syu ：进行全面系统更新
+sudo pacman -Sy  ：刷新本地镜像源
+sudo pacman -Syy ：强制刷新本地镜像源
+
+sudo pacman -S packagename ： 安装指定软件
+sudo pacman -Sy packagename ： 刷新数据库后安装指定软件
+sudo pacman -Sv packagename ： 显示一些操作信息后安装指定软件
+sudo pacman -U pkg.tar.xz ：安装本地包
+sudo pacman -U link.tar.xz ：安装远程包
+
+sudo pacman -R packagename ：删除指定软件，保留其全部已经安装的依赖关系
+sudo pacman -Rns package_name ：删除制定软件，及其所有没有被其他已安装软件包使用的依赖包
+sudo pacman -Rsc packagename ：删除指定软件，并删除所有与该软件存在依赖关系的其他软件
+sudo pacman -Rd packagename ：删除指定软件，不检查依赖
+
+sudo pacman -Ss keyword：在仓库中搜索含关键字的软件
+sudo pacman -Qs keyword：在已安装软件中搜索含关键词的软件
+sudo pacman -Qi packagename：搜索指定软件的详细信息
+sudo pacman -Ql packagename：列出指定软件的文件
+pacman -Qdt ：找出孤立包。-d：标记依赖包、-t：标记不需要的包、-dt：合并标记孤立包
+sudo pacman -Rns $(pacman -Qtdq) ：删除孤立包
+
+sudo pacman -Sw packagename：只下载指定软件而不安装
+sudo pacman -Sc ：清理未安装的软件包
+sudo pacman -Scc ：清理所有的缓存文件
+sudo pacman -Fy ：更新命令查询文件列表数据库
+pacman -F some_command ：当不知道某个命令属于哪个包时，用来在远程软件包中查询某个命令属于哪个包（即使没有安装）
+pactree package_name ：查看一个包的依赖树
