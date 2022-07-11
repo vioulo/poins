@@ -125,6 +125,12 @@ systemctl enable --now dhcpcd # 设置开机自启并立即启动 dhcp 服务
 intel-ucode # Intel
 amd-ucode # AMD
 
+> set grub theme
+sudo cp. /usr/share/grub/themes/archtm -rf
+/etc/default/grub
+GRUB_THEME="/usr/share/grub/themes/archtm/theme.txt"
+grub-mkconfig -o /boot/grub/grub.cfg
+
 ! arch
 > pacman
 sudo pacman -Syu ：进行全面系统更新
