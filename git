@@ -69,3 +69,7 @@ git show hash
 > 忽略文件的权限
 git config core.filemode false
 git config --global core.fileMode false
+
+> 检索 git log
+git log --graph --author='your name' --format='%H|%cn|%s' | grep 'keyword'
+
